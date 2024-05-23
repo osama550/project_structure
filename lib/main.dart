@@ -14,6 +14,9 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  await EasyLocalization.ensureInitialized();
+
   Bloc.observer = const AppBlocObserver();
   await setUpServiceLocator();
   await AppSecureStorage.instance.getToken();
