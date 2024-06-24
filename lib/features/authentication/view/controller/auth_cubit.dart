@@ -24,7 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold((failure) {
       emit(LoginFailureState(failure));
     }, (loginUser) async {
-      _saveToken(loginUser.token);
+      await _saveToken(loginUser.token);
       emit(LoginSuccessState(loginUser));
     });
   }
