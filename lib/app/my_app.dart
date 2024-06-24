@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.theme(),
           routerConfig: AppRouter.router,
           debugShowCheckedModeBanner: false,
-          title: 'Healthy Food',
+          title: 'Name App',
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
