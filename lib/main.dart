@@ -4,12 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_structure/app/my_app.dart';
-import 'package:project_structure/core/cache/app_secure_storage.dart';
 import 'package:project_structure/core/config/app_bloc_observer.dart';
+import 'package:project_structure/core/databases/cache/hive_config.dart';
 import 'package:project_structure/core/di/service_locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await HiveConfig.init();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -19,7 +20,6 @@ void main() async {
 
   Bloc.observer = const AppBlocObserver();
   await setUpServiceLocator();
-  await AppSecureStorage.instance.getToken();
   await ScreenUtil.ensureScreenSize();
   runApp(EasyLocalization(
     supportedLocales: const [

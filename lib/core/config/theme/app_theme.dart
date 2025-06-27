@@ -7,7 +7,7 @@ class AppTheme {
         backgroundColor: Color(0xff1E1E1E),
       ),
       iconTheme: const IconThemeData(color: Colors.green),
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
           backgroundColor: const Color(0xff282A2C),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),

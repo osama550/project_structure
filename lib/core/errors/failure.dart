@@ -1,4 +1,4 @@
-abstract class Failure {
+class Failure {
   final dynamic errorMessage;
-  const Failure(this.errorMessage);
+  const Failure({required this.errorMessage});
 }
