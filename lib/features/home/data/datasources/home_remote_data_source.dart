@@ -8,7 +8,7 @@ class HomeRemoteDataSource {
   HomeRemoteDataSource({required this.api});
 
   Future<HomeModel> getHomeData() async {
-    final response = await api.get(EndPoints.home);
-    return HomeModel.fromJson(response);
+    final response = await api.get(endPoint: EndPoints.home);
+    return HomeModel.fromJson(response.data);
   }
 }

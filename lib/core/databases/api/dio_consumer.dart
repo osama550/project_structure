@@ -48,7 +48,7 @@ class DioConsumer extends ApiConsumer {
   /// Generic request handler for all HTTP methods
   Future<Response> _request(
     ApiRequestMethods method, {
-    required String path,
+    required String endPoint,
     dynamic data,
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -63,35 +63,35 @@ class DioConsumer extends ApiConsumer {
       switch (method) {
         case ApiRequestMethods.get:
           return await _dio.get(
-            path,
+            endPoint,
             queryParameters: queryParameters,
             data: data,
             options: options,
           );
         case ApiRequestMethods.post:
           return await _dio.post(
-            path,
+            endPoint,
             data: data,
             queryParameters: queryParameters,
             options: options,
           );
         case ApiRequestMethods.put:
           return await _dio.put(
-            path,
+            endPoint,
             data: data,
             queryParameters: queryParameters,
             options: options,
           );
         case ApiRequestMethods.patch:
           return await _dio.patch(
-            path,
+            endPoint,
             data: data,
             queryParameters: queryParameters,
             options: options,
           );
         case ApiRequestMethods.delete:
           return await _dio.delete(
-            path,
+            endPoint,
             data: data,
             queryParameters: queryParameters,
             options: options,
@@ -106,81 +106,68 @@ class DioConsumer extends ApiConsumer {
   }
 
   @override
-  Future<dynamic> get(
-    String path, {
+  Future<Response> get({
+    required String endPoint,
     Object? data,
     Map<String, dynamic>? queryParameters,
-    bool useToken = false,
-  }) async {
-    final response = await _request(
-      ApiRequestMethods.get,
-      path: path,
-      data: data,
-      queryParameters: queryParameters,
-    );
-    return response.data;
-  }
+  }) async =>
+      await _request(
+        ApiRequestMethods.get,
+        endPoint: endPoint,
+        data: data,
+        queryParameters: queryParameters,
+      );
 
   @override
-  Future<dynamic> post(
-    String path, {
+  Future<Response> post({
+    required String endPoint,
     dynamic data,
     Map<String, dynamic>? queryParameters,
-  }) async {
-    final response = await _request(
-      ApiRequestMethods.post,
-      path: path,
-      data: data,
-      queryParameters: queryParameters,
-    );
-    return response.data;
-  }
+  }) async =>
+      await _request(
+        ApiRequestMethods.post,
+        endPoint: endPoint,
+        data: data,
+        queryParameters: queryParameters,
+      );
 
   @override
-  Future<dynamic> put(
-    String path, {
+  Future<Response> put({
+    required String endPoint,
     dynamic data,
     Map<String, dynamic>? queryParameters,
     bool useToken = true,
-  }) async {
-    final response = await _request(
-      ApiRequestMethods.put,
-      path: path,
-      data: data,
-      queryParameters: queryParameters,
-    );
-    return response.data;
-  }
+  }) async =>
+      await _request(
+        ApiRequestMethods.put,
+        endPoint: endPoint,
+        data: data,
+        queryParameters: queryParameters,
+      );
 
   @override
-  Future<dynamic> patch(
-    String path, {
+  Future<Response> patch({
+    required String endPoint,
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    bool useToken = true,
-  }) async {
-    final response = await _request(
-      ApiRequestMethods.patch,
-      path: path,
-      data: data,
-      queryParameters: queryParameters,
-    );
-    return response.data;
-  }
+  }) async =>
+      await _request(
+        ApiRequestMethods.patch,
+        endPoint: endPoint,
+        data: data,
+        queryParameters: queryParameters,
+      );
 
   @override
-  Future<dynamic> delete(
-    String path, {
+  Future<Response> delete({
+    required String endPoint,
     Object? data,
     Map<String, dynamic>? queryParameters,
-    bool useToken = true,
-  }) async {
-    final response = await _request(
-      ApiRequestMethods.delete,
-      path: path,
-      data: data,
-      queryParameters: queryParameters,
-    );
-    return response.data;
-  }
+  }) async =>
+      await _request(
+        ApiRequestMethods.delete,
+        endPoint: endPoint,
+        data: data,
+        queryParameters: queryParameters,
+      );
 }

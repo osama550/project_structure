@@ -10,6 +10,7 @@ import 'package:project_structure/core/di/service_locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await setUpServiceLocator();
   await HiveConfig.init();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -19,7 +20,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   Bloc.observer = const AppBlocObserver();
-  await setUpServiceLocator();
+
   await ScreenUtil.ensureScreenSize();
   runApp(EasyLocalization(
     supportedLocales: const [

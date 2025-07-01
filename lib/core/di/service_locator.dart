@@ -5,16 +5,19 @@ import 'package:project_structure/core/databases/api/api_consumer.dart';
 import 'package:project_structure/core/databases/api/dio_consumer.dart';
 import 'package:project_structure/core/databases/cache/app_secure_storage.dart';
 import 'package:project_structure/core/databases/cache/cache_helper.dart';
+import 'package:project_structure/core/databases/cache/hive_config.dart';
 import 'package:project_structure/core/di/home_depndencies.dart';
 
 final GetIt getIt = GetIt.instance;
 
 Future<void> setUpServiceLocator() async {
   getIt.registerLazySingleton<ApiConsumer>(() => DioConsumer());
+  getIt.registerLazySingleton<DioConsumer>(() => DioConsumer());
   getIt.registerLazySingleton<CacheHelper>(() => CacheHelperImpl());
   getIt.registerLazySingleton<AppSecureStorage>(() => AppSecureStorageImpl());
   getIt.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(InternetConnection()));
+  getIt.registerLazySingleton<HiveConfig>(() => HiveConfig());
 
   homeDepndencies();
 }
