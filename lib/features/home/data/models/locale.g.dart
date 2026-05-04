@@ -8,7 +8,7 @@ part of 'locale.dart';
 
 class LocaleAdapter extends TypeAdapter<Locale> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
   Locale read(BinaryReader reader) {
@@ -17,7 +17,7 @@ class LocaleAdapter extends TypeAdapter<Locale> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Locale(
-      id: fields[0] as int?,
+      id: (fields[0] as num?)?.toInt(),
       name: fields[1] as String?,
       description: fields[2] as String?,
       locale: fields[3] as String?,

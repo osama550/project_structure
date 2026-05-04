@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class ColorsPalette {
   static late Map<String, dynamic> mergedSettings;
 
-  static Color primary500 = const Color(0xFFF2743D);
-  static Color greyscale900 = const Color(0xFF212121);
+  static const Color primary500 = Color(0xFFF2743D);
+  static const Color greyscale900 = Color(0xFF212121);
   static const Color primary = Color(0xFFFB9400);
   static const Color secondary = Color(0xFFFFD300);
 

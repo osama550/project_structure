@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:project_structure/features/home/data/models/locale.dart';
 
 part 'home_model.g.dart';

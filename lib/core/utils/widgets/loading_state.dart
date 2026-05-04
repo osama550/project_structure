@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:project_structure/core/constant/color.dart';
+import 'package:project_structure/core/config/theme/color.dart';
 
 class LoadingStateView extends StatelessWidget {
   const LoadingStateView({
     super.key,
-    this.color = ConstColor.foucsBorderColor,
+    this.color = ColorsPalette.primary500,
   });
   final Color color;
   @override

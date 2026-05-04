@@ -1,0 +1,26 @@
+# flutter_native_splash:
+#   # Light mode
+#   color: "#BB3BBF"            # Light mode background color
+#   image: assets/images/splash-light.png
+
+#   # Dark mode
+#   color_dark: "#494949"       # Dark mode background color
+#   image_dark: assets/images/splash-dark.png
+
+#   android_12:
+#     # Light mode for Android 12+
+#     color: "#BB3BBF"
+#     image: assets/images/splash-light.png
+
+#     # Dark mode for Android 12+
+#     color_dark: "#494949"
+#     image_dark: assets/images/splash-dark.png
+
+#   web: true
+#   web_image_mode: center
+
+#   # Web Light/Dark
+#   color_web: "#BB3BBF"
+#   image_web: assets/images/splash-light.png
+#   color_dark_web: "#494949"
+#   image_dark_web: assets/images/splash-dark.png

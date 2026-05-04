@@ -1,4 +1,4 @@
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:project_structure/core/connection/network_info.dart';
 import 'package:project_structure/core/databases/api/api_consumer.dart';
 import 'package:project_structure/core/di/service_locator.dart';

@@ -8,7 +8,7 @@ part of 'home_model.dart';
 
 class HomeModelAdapter extends TypeAdapter<HomeModel> {
   @override
-  final int typeId = 0;
+  final typeId = 0;
 
   @override
   HomeModel read(BinaryReader reader) {

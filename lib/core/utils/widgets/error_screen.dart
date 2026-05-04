@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project_structure/core/config/router/app_routes.dart';
-import 'package:project_structure/core/config/theme/app_text_styles.dart';
 import 'package:project_structure/core/config/theme/color.dart';
 import 'package:project_structure/core/utils/classes/size_config.dart';
+import 'package:project_structure/core/utils/extensions/context_extension.dart';
 
 class ErrorScreen extends StatefulWidget {
   final String? message;
@@ -172,7 +172,7 @@ class _ErrorScreenState extends State<ErrorScreen>
                     // Error title with responsive typography
                     Text(
                       context.tr('Oops! Something went wrong'),
-                      style: TextStyles().h4Bold(context),
+                      style: context.typography.h4Bold,
                       textAlign: TextAlign.center,
                     ),
 
@@ -187,7 +187,7 @@ class _ErrorScreenState extends State<ErrorScreen>
                     Text(
                       context.tr(
                           'If the problem persists, please contact our support team.'),
-                      style: TextStyles().bodyMediumMedium(context),
+                      style: context.typography.bodyMediumMedium,
                       textAlign: TextAlign.center,
                     ),
                   ],
