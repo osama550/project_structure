@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_structure/core/config/theme/app_typography.dart';
+import 'package:project_structure/core/theme/app_typography.dart';
 
 extension ThemeContextExtensions on BuildContext {
   AppTypography get typography {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_structure/core/config/theme/app_typography.dart';
-import 'package:project_structure/core/config/theme/breakpoints.dart';
+import 'package:project_structure/core/theme/app_typography.dart';
+import 'package:project_structure/core/theme/breakpoints.dart';
 
 class AppTheme {
   static ThemeData? theme(DeviceType deviceType) {

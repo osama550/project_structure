@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:project_structure/app/my_app.dart';
-import 'package:project_structure/core/config/app_bloc_observer.dart';
+import 'package:project_structure/app.dart';
+import 'package:project_structure/core/utils/classes/app_bloc_observer.dart';
 import 'package:project_structure/core/databases/cache/hive_config.dart';
 import 'package:project_structure/core/di/service_locator.dart';
 
@@ -30,7 +30,7 @@ void main() async {
       Locale('ar'),
     ],
     path: "assets/translations",
-    child: const MyApp(),
+    child: const App(),
   ));
   FlutterNativeSplash.remove();
 }

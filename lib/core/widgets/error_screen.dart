@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:project_structure/core/config/router/app_routes.dart';
-import 'package:project_structure/core/config/theme/color.dart';
+import 'package:project_structure/core/router/app_routes.dart';
+import 'package:project_structure/core/theme/color.dart';
 import 'package:project_structure/core/utils/classes/size_config.dart';
 import 'package:project_structure/core/utils/extensions/context_extension.dart';
 
