@@ -12,7 +12,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceType = Breakpoints.of(context);
-    Constant.initialLocation = AppRoutes.homeView;
+    Constants.initialLocation = AppRoutes.homeView;
     return MediaQuery.withClampedTextScaling(
         maxScaleFactor: 1,
         child: MaterialApp.router(
