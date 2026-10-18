@@ -4,23 +4,24 @@ import 'package:project_structure/features/home/data/models/home_model.dart';
 
 class HomeLocalDataSource {
   final Box<HomeModel> box;
+  static const String boxName = 'homeBox';
   static const String _key = 'homeData';
 
   HomeLocalDataSource({required this.box});
 
   Future<HomeModel> getHomeData() async {
+    final HomeModel? homeData;
     try {
-      final homeData = box.get(_key);
-      if (homeData != null) {
-        return homeData;
-      } else {
-        throw CacheException(errorMessage: "No Internet Connection");
-      }
+      homeData = box.get(_key);
     } catch (e) {
       throw CacheException(
         errorMessage: 'Failed to retrieve home data: ${e.toString()}',
       );
     }
+    if (homeData == null) {
+      throw CacheException(errorMessage: 'No cached home data available');
+    }
+    return homeData;
   }
 
   Future<void> saveHomeData(HomeModel model) async {

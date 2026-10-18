@@ -1,4 +1,5 @@
 import 'package:hive_ce/hive_ce.dart';
+import 'package:project_structure/features/home/domain/entities/home_entity.dart';
 
 part 'locale.g.dart';
 
@@ -19,6 +20,13 @@ class Locale extends HiveObject {
     this.description,
     this.locale,
   });
+
+  HomeLocaleEntity toEntity() => HomeLocaleEntity(
+        id: id,
+        name: name,
+        description: description,
+        locale: locale,
+      );
 
   factory Locale.fromJson(Map<String, dynamic> json) => Locale(
         id: json["id"],

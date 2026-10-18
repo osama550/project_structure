@@ -33,10 +33,6 @@ class CacheHelperImpl implements CacheHelper {
     } else {
       await secureStorage.init();
     }
-
-    for (final key in sharedPreferences.getKeys()) {
-      log('Key: $key, Value: ${sharedPreferences.get(key)}');
-    }
   }
 
   @override

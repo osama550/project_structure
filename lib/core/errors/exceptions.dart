@@ -25,6 +25,10 @@ class ReceiveTimeoutException extends ServerException {
   ReceiveTimeoutException(super.errorModel);
 }
 
+class TransformTimeoutException extends ServerException {
+  TransformTimeoutException(super.errorModel);
+}
+
 class BadCertificateException extends ServerException {
   BadCertificateException(super.errorModel);
 }
@@ -76,7 +80,10 @@ dynamic handleDioException(DioException e) {
   // Helper to parse ErrorModel safely
   ErrorModel parseError() {
     if (responseData is Map<String, dynamic>) {
-      return ErrorModel.fromJson(responseData);
+      return ErrorModel.fromJson(
+        responseData,
+        fallbackStatus: e.response?.statusCode,
+      );
     }
     return ErrorModel(
       status: e.response?.statusCode,
@@ -93,6 +100,9 @@ dynamic handleDioException(DioException e) {
 
     case DioExceptionType.receiveTimeout:
       throw ReceiveTimeoutException(parseError());
+
+    case DioExceptionType.transformTimeout:
+      throw TransformTimeoutException(parseError());
 
     case DioExceptionType.badCertificate:
       throw BadCertificateException(parseError());

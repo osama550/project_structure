@@ -13,12 +13,16 @@ abstract class AppSecureStorage {
 class AppSecureStorageImpl implements AppSecureStorage {
   static const String _tokenKey = 'token_key';
 
-  late final FlutterSecureStorage _storage;
+  final FlutterSecureStorage _storage = const FlutterSecureStorage(
+    aOptions: AndroidOptions(resetOnError: true),
+  );
   String? _cachedToken;
+
+  /// Warms the token cache. Optional: [getToken] reads lazily, so the storage
+  /// is usable even if this was never called.
   @override
   Future<void> init() async {
     try {
-      _storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
       _cachedToken = await _storage.read(key: _tokenKey);
     } catch (e) {
       throw CacheException(
@@ -26,10 +30,6 @@ class AppSecureStorageImpl implements AppSecureStorage {
     }
   }
 
-  static AndroidOptions _getAndroidOptions() => const AndroidOptions(
-        encryptedSharedPreferences: true,
-        resetOnError: true,
-      );
   @override
   Future<void> saveToken(String token) async {
     try {

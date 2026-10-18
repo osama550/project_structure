@@ -7,18 +7,19 @@ import 'package:project_structure/features/home/data/datasources/home_remote_dat
 import 'package:project_structure/features/home/data/models/home_model.dart';
 import 'package:project_structure/features/home/data/repositories/home_repos_impl.dart';
 import 'package:project_structure/features/home/domain/repositories/home_repos.dart';
+import 'package:project_structure/features/home/domain/usecases/get_home_usecase.dart';
 import 'package:project_structure/features/home/presentation/cubit/home_cubit.dart';
 
-void homeDepndencies() {
-  // Data sources
+/// Opens the feature's Hive box. Adapters are registered once in HiveConfig.
+Future<void> homeDependencies() async {
+  final box = await Hive.openBox<HomeModel>(HomeLocalDataSource.boxName);
+
   getIt.registerLazySingleton<HomeLocalDataSource>(
-    () => HomeLocalDataSource(box: Hive.box<HomeModel>('homeBox')),
+    () => HomeLocalDataSource(box: box),
   );
   getIt.registerLazySingleton<HomeRemoteDataSource>(
     () => HomeRemoteDataSource(api: getIt<ApiConsumer>()),
   );
-
-  // Repository
   getIt.registerLazySingleton<HomeRepos>(
     () => HomeReposImpl(
       getIt<NetworkInfo>(),
@@ -26,9 +27,8 @@ void homeDepndencies() {
       getIt<HomeLocalDataSource>(),
     ),
   );
-
-  // Cubit
-  getIt.registerFactory<HomeCubit>(
-    () => HomeCubit(getIt<HomeRepos>()),
+  getIt.registerLazySingleton<GetHomeUseCase>(
+    () => GetHomeUseCase(getIt<HomeRepos>()),
   );
+  getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt<GetHomeUseCase>()));
 }

@@ -11,19 +11,19 @@ extension HomeStatusX on HomeStatus {
 
 class HomeState extends Equatable {
   final HomeStatus status;
-  final HomeModel? homeModel;
+  final HomeEntity? home;
   final String? failure;
-  const HomeState(
-      {this.status = HomeStatus.initial, this.homeModel, this.failure});
+  const HomeState({this.status = HomeStatus.initial, this.home, this.failure});
   HomeState copyWith({
     HomeStatus? status,
-    HomeModel? homeModel,
+    HomeEntity? home,
     String? failure,
   }) =>
       HomeState(
           status: status ?? this.status,
-          homeModel: homeModel ?? this.homeModel,
-          failure: failure ?? this.failure);
+          home: home ?? this.home,
+          // Not carried over: a new state without a failure clears the old one.
+          failure: failure);
   @override
-  List<Object?> get props => [status, homeModel, failure];
+  List<Object?> get props => [status, home, failure];
 }

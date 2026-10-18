@@ -1,48 +1,56 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:project_structure/core/config/env.dart';
 import 'package:project_structure/core/databases/api/api_consumer.dart';
-import 'package:project_structure/core/databases/api/end_points.dart';
 import 'package:project_structure/core/databases/cache/app_secure_storage.dart';
-import 'package:project_structure/core/di/service_locator.dart';
 import 'package:project_structure/core/errors/error_model.dart';
 import 'package:project_structure/core/errors/exceptions.dart';
 
 class DioConsumer extends ApiConsumer {
-  late final Dio _dio;
-  bool _isInitialized = false;
+  final Dio _dio;
 
-  DioConsumer() {
-    _initializeDio();
-  }
-
-  /// Initializes Dio with base options and interceptors
-  Future<void> _initializeDio() async {
-    if (_isInitialized) return;
-
-    _dio = Dio(
-      BaseOptions(
-        baseUrl: EndPoints.baseUrl,
-        receiveDataWhenStatusError: true,
-        connectTimeout: const Duration(seconds: 30),
-        sendTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+  DioConsumer(AppSecureStorage secureStorage)
+      : _dio = Dio(
+          BaseOptions(
+            baseUrl: Env.baseUrl,
+            receiveDataWhenStatusError: true,
+            connectTimeout: const Duration(seconds: 30),
+            sendTimeout: const Duration(seconds: 30),
+            receiveTimeout: const Duration(seconds: 30),
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          ),
+        ) {
+    // Token is read inside the request pipeline so a storage failure is
+    // reported as a DioException and mapped like any other request error.
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          try {
+            final token = await secureStorage.getToken();
+            if (token != null) {
+              options.headers['Authorization'] = 'Bearer $token';
+            }
+            handler.next(options);
+          } catch (e) {
+            handler.reject(
+              DioException(requestOptions: options, error: e),
+              true,
+            );
+          }
         },
       ),
     );
 
-    _dio.interceptors.add(
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: true,
-      ),
-    );
-
-    _isInitialized = true;
+    // Debug only. Request headers are excluded: they carry the bearer token.
+    if (kDebugMode) {
+      _dio.interceptors.add(
+        PrettyDioLogger(requestBody: true, responseBody: true),
+      );
+    }
   }
 
   /// Generic request handler for all HTTP methods
@@ -52,49 +60,37 @@ class DioConsumer extends ApiConsumer {
     dynamic data,
     Map<String, dynamic>? queryParameters,
   }) async {
-    final String? token = await getIt.get<AppSecureStorage>().getToken();
-    final headers = {
-      if (token != null) 'Authorization': 'Bearer $token',
-    };
-
     try {
-      final options = Options(headers: headers);
-
       switch (method) {
         case ApiRequestMethods.get:
           return await _dio.get(
             endPoint,
             queryParameters: queryParameters,
             data: data,
-            options: options,
           );
         case ApiRequestMethods.post:
           return await _dio.post(
             endPoint,
             data: data,
             queryParameters: queryParameters,
-            options: options,
           );
         case ApiRequestMethods.put:
           return await _dio.put(
             endPoint,
             data: data,
             queryParameters: queryParameters,
-            options: options,
           );
         case ApiRequestMethods.patch:
           return await _dio.patch(
             endPoint,
             data: data,
             queryParameters: queryParameters,
-            options: options,
           );
         case ApiRequestMethods.delete:
           return await _dio.delete(
             endPoint,
             data: data,
             queryParameters: queryParameters,
-            options: options,
           );
       }
     } on DioException catch (e) {
@@ -136,7 +132,6 @@ class DioConsumer extends ApiConsumer {
     required String endPoint,
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    bool useToken = true,
   }) async =>
       await _request(
         ApiRequestMethods.put,
