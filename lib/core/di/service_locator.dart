@@ -5,20 +5,26 @@ import 'package:project_structure/core/databases/api/api_consumer.dart';
 import 'package:project_structure/core/databases/api/dio_consumer.dart';
 import 'package:project_structure/core/databases/cache/app_secure_storage.dart';
 import 'package:project_structure/core/databases/cache/cache_helper.dart';
-import 'package:project_structure/features/home/di/home_dependencies.dart';
-import 'package:project_structure/features/sample/di/sample_dependencies.dart';
+import 'package:project_structure/core/di/modules/home_module.dart';
+import 'package:project_structure/core/di/modules/sample_module.dart';
 
 final GetIt getIt = GetIt.instance;
 
+/// Single composition root. Core services first, then one module per feature.
 Future<void> setUpServiceLocator() async {
+  _registerCore(getIt);
+
+  await registerHomeModule(getIt);
+  registerSampleModule(getIt);
+}
+
+void _registerCore(GetIt getIt) {
   getIt.registerLazySingleton<AppSecureStorage>(() => AppSecureStorageImpl());
   getIt.registerLazySingleton<ApiConsumer>(
     () => DioConsumer(getIt<AppSecureStorage>()),
   );
   getIt.registerLazySingleton<CacheHelper>(() => CacheHelperImpl());
   getIt.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(InternetConnection()));
-
-  await homeDependencies();
-  sampleDependencies();
+    () => NetworkInfoImpl(InternetConnection()),
+  );
 }
