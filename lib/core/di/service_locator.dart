@@ -6,6 +6,7 @@ import 'package:project_structure/core/databases/api/dio_consumer.dart';
 import 'package:project_structure/core/databases/cache/app_secure_storage.dart';
 import 'package:project_structure/core/databases/cache/cache_helper.dart';
 import 'package:project_structure/features/home/di/home_dependencies.dart';
+import 'package:project_structure/features/sample/di/sample_dependencies.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -19,4 +20,5 @@ Future<void> setUpServiceLocator() async {
       () => NetworkInfoImpl(InternetConnection()));
 
   await homeDependencies();
+  sampleDependencies();
 }
